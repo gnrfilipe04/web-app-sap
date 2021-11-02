@@ -2,7 +2,7 @@
 	"newTodo": "",
 	"todos": [{
 			"title": "Start this app",
-			"completed": true
+			"completed": false
 		},
 		{
 			"title": "Learn OpenUI5",
