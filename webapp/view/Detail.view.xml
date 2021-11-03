@@ -7,7 +7,7 @@
 		showNavButton="true"
 		navButtonPress=".onNavBack">
 		<ObjectHeader
-			intro="{invoice>ShipperName}"
-			title="{invoice>ProductName}"/>
+			intro="{invoice>OrderID}"
+			title="{invoice>Customer/CompanyName}"/>
 	</Page>
 </mvc:View>

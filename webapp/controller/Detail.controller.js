@@ -4,19 +4,17 @@ sap.ui.define([
 ], function (Controller, History) {
 	"use strict";
 	return Controller.extend("sap.ui.demo.walkthrough.controller.Detail", {
-		onInit: function () {
+		onInit(){
 			var oRouter = this.getOwnerComponent().getRouter();
 			oRouter.getRoute("detail").attachPatternMatched(this._onObjectMatched, this);
-			console.log(oRouter.getRoute("detail"))
-
 		},
-		_onObjectMatched: function (oEvent) {
+		_onObjectMatched(oEvent){
 			this.getView().bindElement({
 				path: "/" + window.decodeURIComponent(oEvent.getParameter("arguments").invoicePath),
 				model: "invoice"
 			});
 		},
-		onNavBack: function () {
+		onNavBack(){
 			var oHistory = History.getInstance();
 			var sPreviousHash = oHistory.getPreviousHash();
 
@@ -26,7 +24,7 @@ sap.ui.define([
 				var oRouter = this.getOwnerComponent().getRouter();
 				oRouter.navTo("overview", {}, true);
 			}
-		}
+		},
 
 	});
 });
