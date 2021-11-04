@@ -4,14 +4,16 @@ sap.ui.define([
 	"../model/formatter",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
-	"sap/ui/model/Sorter"
+	"sap/ui/model/Sorter",
+	"sap/m/GroupHeaderListItem"
 ], function (
 	Controller,
 	JSONModel,
 	formatter,
 	Filter,
 	FilterOperator,
-	Sorter
+	Sorter,
+	GroupHeaderListItem
 	) {
 
 	"use strict";
@@ -20,9 +22,11 @@ sap.ui.define([
 		formatter: formatter,
 
 		onInit : function () {
+
 			var oViewModel = new JSONModel({
 				currency: "EUR"
 			});
+
 			this.getView().setModel(oViewModel, "view");
 		},
 		onPress: function (oEvent) {
@@ -33,24 +37,31 @@ sap.ui.define([
 			});
 		},
 		onFilterInvoices : function (oEvent) {
-			// build filter array
+
 			var aFilter = [];
 			var sQuery = oEvent.getParameter("query");
 			if (sQuery) {
-				aFilter.push(new Filter("ProductName", FilterOperator.Contains, sQuery));
+				aFilter.push(new Filter("ShipCity", FilterOperator.Contains, sQuery));
 			}
 
-			// filter binding
 			var oList = this.byId("invoiceList");
 			var oBinding = oList.getBinding("items");
 			oBinding.filter(aFilter);
 		},
-		onSorter(){
+		onSorter(oContext){
 
 			var oList = this.byId("invoiceList");
 			var oBinding = oList.getBinding("items");
-			console.log(oBinding.iLength)
-			oBinding.sort( new Sorter({  path: 'OrderID', descending: true }) )
+
+			oBinding.sort( new Sorter({  path: 'ShipCountry', descending: false, group: function(oContext){
+				return oContext.getProperty('ShipCountry');
+			}}))
+		},
+		onSorterOrder(){
+			var oList = this.byId("invoiceList");
+			var oBinding = oList.getBinding("items");
+
+			oBinding.sort( new Sorter({  path: 'OrderID', descending: true}))
 		}
 	});
 });

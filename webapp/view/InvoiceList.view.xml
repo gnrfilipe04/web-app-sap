@@ -18,6 +18,7 @@
 				<ToolbarSpacer/>
 				<Button 
 					icon="sap-icon://filter"
+					press=".onSorterOrder"
 				/>
 				<Button 
 					icon="sap-icon://group-2"
@@ -33,6 +34,7 @@
 				}"
 				type="Navigation"
 				press="onPress">
+
 				<firstStatus>
 					<ObjectStatus text="{
 						path: 'invoice>Status',

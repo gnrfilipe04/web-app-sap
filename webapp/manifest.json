@@ -29,6 +29,17 @@
 		"libs": {
 		  "sap.ui.core": {},
 		  "sap.m": {}
+		},
+		"config": {
+			"sample": {
+				"stretch": true,
+				"files": [
+					"controller/DynamicPageFreeStyle.controller.js",
+					"view/DynamicPageFreeStyle.view.xml",
+					"view/Card.fragment.xml",
+					"manifest.json"
+				]
+			}
 		}
 	  },
 	  "models": {
@@ -72,7 +83,7 @@
 		  },
 		  "detail": {
 			"viewId": "detail",
-			"viewName": "Detail"
+			"viewName": "DynamicPageFreeStyle"
 		  }
 		}
 	  },
