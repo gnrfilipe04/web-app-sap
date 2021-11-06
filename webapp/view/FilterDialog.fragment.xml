@@ -1,0 +1,27 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core" >
+   <Dialog
+      id="filterDialog"
+		showHeader="false"
+		>
+		<Page title="Configurações de Visão">
+			<core:Icon
+				src="sap-icon://hello-world"
+				size="8rem"
+				class="sapUiMediumMargin"/>
+		</Page>
+		<beginButton>
+			<Button
+				text="{i18n>dialogCloseButtonText}"
+				press=".onCloseDialog"
+				type="Emphasized"
+				/>
+			</beginButton>
+		<endButton>
+			<Button
+				text="Cancelar"
+				press=".onCloseDialog"/>
+		</endButton>
+   </Dialog>
+</core:FragmentDefinition>

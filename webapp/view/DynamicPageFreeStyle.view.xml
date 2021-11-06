@@ -24,13 +24,11 @@
 						<Button
 								icon="sap-icon://full-screen"
 								type="Transparent" />
-						
-						<Button
-								icon="sap-icon://exit-full-screen"
-								type="Transparent" />
 						<Button
 								icon="sap-icon://decline"
-								type="Transparent" />
+								type="Transparent"
+								press=".onNavBack" 
+								/>
 					</f:navigationActions>
 				</f:DynamicPageTitle>
 			</f:title>
@@ -46,7 +44,7 @@
 
 						<layout:VerticalLayout>
 							<ObjectAttribute title="Price"/>
-							<ObjectStatus text="In Stock" state="Success" />
+							<ObjectStatus text="{invoice>Freight}" state="Success" />
 						</layout:VerticalLayout>
 					</layout:HorizontalLayout>
 				</f:DynamicPageHeader>
@@ -100,7 +98,7 @@
 										<form:SimpleForm id="SimpleFormDisplay354wideDual"
 											editable="false"
 											layout="ResponsiveGridLayout"
-											title="Address"
+											title="Processor Information"
 											labelSpanXL="4"
 											labelSpanL="3"
 											labelSpanM="4"
@@ -115,20 +113,21 @@
 											columnsM="1"
 											singleContainerFullSize="false" >
 											<form:content>
-												<core:Title text="Office" />
-												<Label text="Full name of the contact" />
-												<Text id="processorNameText" text="{SupplierName}" />
-												<Label text="Street and number where the contact is located" />
-												<Text text="{Street} {HouseNumber}" />
-												<Label text="ZIP Code and City" />
-												<Text text="{ZIPCode} {City}" />
-												<Label text="Country where the contact is located" />
-												<Text id="processorCountryText" text="{Country}" />
-												<core:Title text="Online" />
-												<Label text="Web page of the contact" />
-												<Text text="{Url}" />
-												<Label text="Twitter account of the contact" />
-												<Text text="{Twitter}" />
+												<core:Title text="Details" />
+												<Label text="Name" />
+												<Text id="processorNameText" text="{invoice>Employee/FirstName}" />
+												<Label text="Employee ID" />
+												<Text text="{invoice>Employee/EmployeeID}" />
+												<Label text="Job Title" />
+												<Text text="{invoice>Employee/Title}" />
+												<Label text="Phone" />
+												<Link id="processorCountryText" text="{invoice>Employee/HomePhone}" href="{invoice>Employee/HomePhone}"/>
+												<core:Title text="Picture" />
+												<Image ariaDetails="detailsActiveImage" src="https://sapui5.hana.ondemand.com/test-resources/sap/m/demokit/orderbrowser/webapp/images/Employee.png"
+													width="20rem"
+													decorative="false"
+													press="handleImage3Press"
+													ariaHasPopup="Menu"/>
 											</form:content>
 										</form:SimpleForm>
 									</VBox>

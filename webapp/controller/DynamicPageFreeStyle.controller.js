@@ -2,8 +2,9 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
 	"sap/f/library",
-	"sap/ui/core/Fragment"
-], function (Controller, JSONModel, library, Fragment) {
+	"sap/ui/core/Fragment",
+	"sap/ui/core/routing/History"
+], function (Controller, JSONModel, library, Fragment, History) {
 	"use strict";
 
 	// shortcut for sap.f.DynamicPageTitleArea
@@ -49,6 +50,17 @@ sap.ui.define([
 			this._pPopover.then(function (oPopover) {
 				oPopover.openBy(oSourceControl);
 			});
-		}
+		},
+		onNavBack(){
+			var oHistory = History.getInstance();
+			var sPreviousHash = oHistory.getPreviousHash();
+
+			if (sPreviousHash !== undefined) {
+				window.history.go(-1);
+			} else {
+				var oRouter = this.getOwnerComponent().getRouter();
+				oRouter.navTo("overview", {}, true);
+			}
+		},
 	});
 });

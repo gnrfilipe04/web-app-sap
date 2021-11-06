@@ -5,7 +5,7 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/ui/model/Sorter",
-	"sap/m/GroupHeaderListItem"
+	"sap/ui/core/Fragment"
 ], function (
 	Controller,
 	JSONModel,
@@ -13,7 +13,7 @@ sap.ui.define([
 	Filter,
 	FilterOperator,
 	Sorter,
-	GroupHeaderListItem
+	Fragment
 	) {
 
 	"use strict";
@@ -21,7 +21,7 @@ sap.ui.define([
 	return Controller.extend("sap.ui.demo.walkthrough.controller.InvoiceList", {
 		formatter: formatter,
 
-		onInit : function () {
+		onInit() {
 
 			var oViewModel = new JSONModel({
 				currency: "EUR"
@@ -29,14 +29,14 @@ sap.ui.define([
 
 			this.getView().setModel(oViewModel, "view");
 		},
-		onPress: function (oEvent) {
+		onPress(oEvent) {
 			var oItem = oEvent.getSource();
 			var oRouter = this.getOwnerComponent().getRouter();
 			oRouter.navTo("detail", {
 				invoicePath: window.encodeURIComponent(oItem.getBindingContext("invoice").getPath().substr(1))
 			});
 		},
-		onFilterInvoices : function (oEvent) {
+		onFilterInvoices(oEvent) {
 
 			var aFilter = [];
 			var sQuery = oEvent.getParameter("query");
@@ -58,10 +58,21 @@ sap.ui.define([
 			}}))
 		},
 		onSorterOrder(){
-			var oList = this.byId("invoiceList");
-			var oBinding = oList.getBinding("items");
 
-			oBinding.sort( new Sorter({  path: 'OrderID', descending: true}))
+			this.onOpenDialog()
+
+			// var oList = this.byId("invoiceList");
+			// var oBinding = oList.getBinding("items");
+
+			// oBinding.sort( new Sorter({  path: 'OrderID', descending: true}))
+		},
+		onOpenDialog(){
+			if (!this.pDialog) this.pDialog = this.loadFragment({ name: "sap.ui.demo.walkthrough.view.FilterDialog"});
+
+			this.pDialog.then((oDialog) => oDialog.open());
+		},
+		onCloseDialog() {
+			this.byId("filterDialog").close();
 		}
 	});
 });
