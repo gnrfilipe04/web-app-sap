@@ -4,7 +4,9 @@
 		xmlns="sap.m"
 		xmlns:f="sap.f"
 		xmlns:layout="sap.ui.layout"
-		height="100%">
+		xmlns:form="sap.ui.layout.form"
+		height="100%"
+		xmlns:core="sap.ui.core">
 		<f:DynamicPage id="dynamicPageId" headerExpanded="{/headerExpanded}" toggleHeaderOnTitleClick="{/titleClickable}">
 			<!-- DynamicPage Title -->
 			<f:title>
@@ -50,64 +52,146 @@
 				</f:DynamicPageHeader>
 			</f:header>
 			<f:content>
-				<Table id="idProductsTable"
-						sticky="HeaderToolbar,ColumnHeaders"
-						inset="false"
-						items="{
-							path: 'invoice>Order_Details/results',
-							sorter: {
-								path: 'ProductID'
-							}
-						}"
-					   class="sapFDynamicPageAlignContent"
-					   width="auto">
-					<headerToolbar>
-						<Toolbar>
-							<Title text="Products" level="H2"/>
-						</Toolbar>
-					</headerToolbar>
-					<columns>
-						<Column
-								width="12em">
-							<Text text="Product" />
-						</Column>
-						<Column
-								minScreenWidth="Tablet"
-								demandPopin="true">
-							<Text text="Supplier" />
-						</Column>
-						<Column
-								minScreenWidth="Tablet"
-								demandPopin="true"
-								hAlign="End">
-							<Text text="Dimensions" />
-						</Column>
-						<Column
-								hAlign="End">
-							<Text text="Price" />
-						</Column>
-					</columns>
-					<items>
-						<ColumnListItem>
-							<cells>
-								<ObjectIdentifier
-										title="{Name}"
-										text="{ProductId}"/>
-								<Text
-										text="{SupplierName}" />
-								<Text
-										text="{Width} x {Depth} x {Height} {DimUnit}" />
-								<ObjectNumber
-										number="{
-											parts:[{path:'Price'},{path:'CurrencyCode'}],
-											type: 'sap.ui.model.type.Currency',
-											formatOptions: {showMeasure: false}
-										}"
-										unit="{CurrencyCode}" />
-							</cells>
-						</ColumnListItem>
-					</items>
-				</Table>
+				<layout:VerticalLayout class="sapUiMediumMarginEnd">
+					<IconTabBar
+						id="idIconTabBarMulti"
+						expanded="{device>/isNoPhone}"
+						class="sapUiResponsiveContentPadding"
+						headerBackgroundDesign="Transparent"
+						>
+							<items>
+								<IconTabFilter icon="sap-icon://shipping-status" key="info">
+									<VBox class="sapUiSmallMargin">
+										<form:SimpleForm id="SimpleFormDisplay354"
+											editable="false"
+											layout="ResponsiveGridLayout"
+											title="Shipping Address"
+											labelSpanXL="3"
+											labelSpanL="3"
+											labelSpanM="3"
+											labelSpanS="12"
+											adjustLabelSpan="false"
+											emptySpanXL="4"
+											emptySpanL="4"
+											emptySpanM="4"
+											emptySpanS="0"
+											columnsXL="1"
+											columnsL="1"
+											columnsM="1"
+											singleContainerFullSize="false" >
+											<form:content>
+												<Label text="Name" />
+												<Text id="nameText" text="{invoice>ShipName}" />
+												<Label text="Street" />
+												<Text text="{invoice>ShipAddress}" />
+												<Label text="ZIP Code/City" />
+												<Text text="{invoice>ShipPostalCode}" />
+												<Label text="Region" />
+												<Text text="{invoice>ShipRegion}" />
+												<Label text="Country" />
+												<Text id="countryText" text="{invoice>ShipCountry}" />
+											</form:content>
+										</form:SimpleForm>
+									</VBox>
+							
+								</IconTabFilter>
+								<IconTabFilter icon="sap-icon://employee" key="attachments">
+										<VBox class="sapUiSmallMargin">
+										<form:SimpleForm id="SimpleFormDisplay354wideDual"
+											editable="false"
+											layout="ResponsiveGridLayout"
+											title="Address"
+											labelSpanXL="4"
+											labelSpanL="3"
+											labelSpanM="4"
+											labelSpanS="12"
+											adjustLabelSpan="false"
+											emptySpanXL="0"
+											emptySpanL="4"
+											emptySpanM="0"
+											emptySpanS="0"
+											columnsXL="2"
+											columnsL="1"
+											columnsM="1"
+											singleContainerFullSize="false" >
+											<form:content>
+												<core:Title text="Office" />
+												<Label text="Full name of the contact" />
+												<Text id="processorNameText" text="{SupplierName}" />
+												<Label text="Street and number where the contact is located" />
+												<Text text="{Street} {HouseNumber}" />
+												<Label text="ZIP Code and City" />
+												<Text text="{ZIPCode} {City}" />
+												<Label text="Country where the contact is located" />
+												<Text id="processorCountryText" text="{Country}" />
+												<core:Title text="Online" />
+												<Label text="Web page of the contact" />
+												<Text text="{Url}" />
+												<Label text="Twitter account of the contact" />
+												<Text text="{Twitter}" />
+											</form:content>
+										</form:SimpleForm>
+									</VBox>
+								</IconTabFilter>
+							</items>
+					</IconTabBar>
+
+					<Table id="idProductsTable"
+							sticky="HeaderToolbar,ColumnHeaders"
+							inset="false"
+							items="{
+								path: 'invoice>Order_Details/results'
+							}"
+						class="sapFDynamicPageAlignContent"
+						width="auto">
+						<headerToolbar>
+							<Toolbar>
+								<Title text="Line Items" level="H2"/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column
+									width="20em">
+								<Text text="Product" />
+							</Column>
+							<Column
+									minScreenWidth="Tablet"
+									demandPopin="true">
+								<Text text="Unit Price" />
+							</Column>
+							<Column
+									minScreenWidth="Tablet"
+									demandPopin="true"
+									hAlign="End">
+								<Text text="Quantity" />
+							</Column>
+							<Column
+									hAlign="End">
+								<Text text="Total" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<ObjectIdentifier
+											title="{invoice>Product/ProductName}"
+											text="{invoice>Product/ProductID}"/>
+									<Text
+											text="{invoice>UnitPrice}" />
+									<Text
+											text="{invoice>Quantity}"/>
+									<ObjectNumber
+											number="{
+												parts:[{path:'invoice>Product/UnitPrice'}],
+												type: 'sap.ui.model.type.Currency',
+												formatOptions: {showMeasure: false}
+											}"
+											unit="{CurrencyCode}" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</layout:VerticalLayout>
 			</f:content>
 			<!-- DynamicPage Footer -->
 			<f:footer>
