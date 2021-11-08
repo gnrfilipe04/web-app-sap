@@ -38,8 +38,10 @@
 					<layout:HorizontalLayout allowWrapping="true">
 						<layout:VerticalLayout class="sapUiMediumMarginEnd">
 							<ObjectAttribute title="Customer" text="{invoice>Customer/CompanyName}"/>
-							<ObjectAttribute title="Ordered" text="{invoice>OrderDate}"/>
-							<ObjectAttribute title="Shipped" text="{invoice>ShippedDate}"/>
+							<ObjectAttribute title="Ordered" text="{path: 'invoice>OrderDate'}"/>
+							<ObjectAttribute title="Shipped" text="{
+									path: 'invoice>ShippedDate'
+								}"/>
 						</layout:VerticalLayout>
 
 						<layout:VerticalLayout>

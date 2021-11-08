@@ -1,27 +1,21 @@
 <core:FragmentDefinition
    xmlns="sap.m"
    xmlns:core="sap.ui.core" >
-   <Dialog
-      id="filterDialog"
-		showHeader="false"
-		>
-		<Page title="Configurações de Visão">
-			<core:Icon
-				src="sap-icon://hello-world"
-				size="8rem"
-				class="sapUiMediumMargin"/>
-		</Page>
-		<beginButton>
-			<Button
-				text="{i18n>dialogCloseButtonText}"
-				press=".onCloseDialog"
-				type="Emphasized"
-				/>
-			</beginButton>
-		<endButton>
-			<Button
-				text="Cancelar"
-				press=".onCloseDialog"/>
-		</endButton>
-   </Dialog>
+   	<ViewSettingsDialog
+	   	id="filterDialog"
+		confirm="handleConfirm">
+		<groupItems>
+			<ViewSettingsItem text="Group by Customer" key="Customer/CompanyName"/>
+			<ViewSettingsItem text="Group by Order Period" key="OrderDate" />
+			<ViewSettingsItem text="Group by Shipped Period" key="ShippedDate" />
+		</groupItems>
+		<filterItems>
+			<ViewSettingsFilterItem text="Orders" key="1" multiSelect="false">
+				<items>
+					<ViewSettingsItem text="Only Orders With Region" key="region" />
+					<ViewSettingsItem text="Only Orders Without Region" key="noRegion" />
+				</items>
+			</ViewSettingsFilterItem>
+		</filterItems>
+	</ViewSettingsDialog>
 </core:FragmentDefinition>

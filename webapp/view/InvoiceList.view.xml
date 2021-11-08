@@ -18,11 +18,11 @@
 				<ToolbarSpacer/>
 				<Button 
 					icon="sap-icon://filter"
-					press=".onSorterOrder"
+					press=".onOpenDialog"
 				/>
 				<Button 
 					icon="sap-icon://group-2"
-					press=".onSorter"
+					press=".onOpenDialog"
 				/>
 			</Toolbar>
       	</headerToolbar>
@@ -30,19 +30,25 @@
 			<ObjectListItem
 				title="Order {invoice>OrderID}"
 				number="{
-					path: 'invoice>OrderDate'
+					path: 'invoice>RequiredDate',
+					formatter: '.formatter.dateFormat'
 				}"
 				type="Navigation"
 				press="onPress">
 
 				<firstStatus>
-					<ObjectStatus text="{
-						path: 'invoice>Status',
+					<ObjectStatus 
+					id="statusOrder"
+					text="{
+						parts: [{path: 'invoice>RequiredDate'}, {path: 'invoice>ShippedDate'}],
 						formatter: '.formatter.statusText'
 					}"/>
 				</firstStatus>
 				<ObjectAttribute text="{invoice>Customer/CompanyName}"/>
-				<ObjectAttribute text="Shipped: {invoice>ShippedDate}"/>
+				<ObjectAttribute text="Shipped: {
+						path: 'invoice>ShippedDate',
+						formatter: '.formatter.dateFormat'
+					}"/>
 			</ObjectListItem>
 		</items>
 	</List>

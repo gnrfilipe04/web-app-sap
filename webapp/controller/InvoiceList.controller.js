@@ -48,24 +48,6 @@ sap.ui.define([
 			var oBinding = oList.getBinding("items");
 			oBinding.filter(aFilter);
 		},
-		onSorter(oContext){
-
-			var oList = this.byId("invoiceList");
-			var oBinding = oList.getBinding("items");
-
-			oBinding.sort( new Sorter({  path: 'ShipCountry', descending: false, group: function(oContext){
-				return oContext.getProperty('ShipCountry');
-			}}))
-		},
-		onSorterOrder(){
-
-			this.onOpenDialog()
-
-			// var oList = this.byId("invoiceList");
-			// var oBinding = oList.getBinding("items");
-
-			// oBinding.sort( new Sorter({  path: 'OrderID', descending: true}))
-		},
 		onOpenDialog(){
 			if (!this.pDialog) this.pDialog = this.loadFragment({ name: "sap.ui.demo.walkthrough.view.FilterDialog"});
 
@@ -73,6 +55,33 @@ sap.ui.define([
 		},
 		onCloseDialog() {
 			this.byId("filterDialog").close();
+		},
+		// shows selected filters
+		handleConfirm: function (oEvent) {
+
+			const oList = this.byId("invoiceList");
+			const oBinding = oList.getBinding("items");
+
+			//Filter
+
+			const aFilter = [];
+			const regionExists = oEvent.getParameters().filterKeys.region
+			oEvent.getParameters().filterKeys && aFilter.push(new Filter(
+				"ShipRegion",
+				regionExists ? FilterOperator.Contains : FilterOperator.NotContains,
+				''));
+
+			oBinding.filter(aFilter);
+
+			//Order
+			oEvent.getParameters().groupItem && oBinding.sort( new Sorter(
+				{
+					path: oEvent.getParameters().groupItem.mProperties.key,
+					descending: oEvent.getParameters().groupDescending,
+					group: (oContext) => oContext.getProperty(
+						oEvent.getParameters().groupItem.mProperties.key
+					)
+			}))
 		}
 	});
 });

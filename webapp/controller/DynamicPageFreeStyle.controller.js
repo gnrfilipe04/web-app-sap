@@ -3,14 +3,15 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/f/library",
 	"sap/ui/core/Fragment",
-	"sap/ui/core/routing/History"
-], function (Controller, JSONModel, library, Fragment, History) {
+	"sap/ui/core/routing/History",
+	"../model/formatter"
+], function (Controller, JSONModel, library, Fragment, History, formatter) {
 	"use strict";
 
 	// shortcut for sap.f.DynamicPageTitleArea
 	var DynamicPageTitleArea = library.DynamicPageTitleArea;
-
 	return Controller.extend("sap.f.sample.DynamicPageFreeStyle.controller.DynamicPageFreeStyle", {
+		formatter: formatter,
 		onInit: function () {
 
 			var oRouter = this.getOwnerComponent().getRouter();

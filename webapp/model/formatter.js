@@ -1,18 +1,27 @@
 sap.ui.define([], function () {
 	"use strict";
+
+	function getTimestamp(date){
+		return Number(date.split('/Date(')[1].split(')/')[0])
+	}
+
 	return {
-		statusText: function (sStatus) {
-			var resourceBundle = this.getView().getModel("i18n").getResourceBundle();
-			switch (sStatus) {
-				case "A":
-					return resourceBundle.getText("invoiceStatusA");
-				case "B":
-					return resourceBundle.getText("invoiceStatusB");
-				case "C":
-					return resourceBundle.getText("invoiceStatusC");
-				default:
-					return sStatus;
+		dateFormat(date) {
+			const dateNumber =  getTimestamp(date)
+			return new Date(dateNumber).toLocaleDateString()
+
+		},
+		statusText(requiredDate, shippedDate) {
+			let required = getTimestamp(requiredDate)
+			let shipped = getTimestamp(shippedDate)
+			if(shipped <= required){
+				this.byId('statusOrder').setState('Success')
+				return 'In Time'
+			}else{
+				this.byId('statusOrder').setState('Error')
+				return 'Too Late'
 			}
-		}
+
+		},
 	};
 });
